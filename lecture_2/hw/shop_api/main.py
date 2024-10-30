@@ -5,9 +5,10 @@ from fastapi.responses import JSONResponse
 from lecture_2.hw.shop_api.models import ItemCreate, ItemUpdate
 from lecture_2.hw.shop_api.storage import generator, items_db, carts_db
 from lecture_2.hw.shop_api.utils import calculate_cart_price
-
+from prometheus_fastapi_instrumentator import Instrumentator
 app = FastAPI(title="Shop API")
 
+Instrumentator().instrument(app).expose(app)
 @app.post("/cart", status_code=201)
 def create_cart():
     cart_id = generator.generate_cart_id()
